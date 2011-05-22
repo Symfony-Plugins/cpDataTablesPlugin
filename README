@@ -32,8 +32,8 @@ The plugin also includes the dataTables 'extras' as well as some dataTables 'plu
 
   * Publish the plugin's assets
 
-       [php]
-       php symfony plugin:publish-assets
+        [php]
+        php symfony plugin:publish-assets
 
 ## Usage
 
