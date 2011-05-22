@@ -1,6 +1,6 @@
 # cpDataTablesPlugin
 
-The `cpDataTablesPlugin` is a symfony plugin that includes the [dataTables](http://www.datatables.net/) jQuery plugin into your symfony aplication.
+The `cpDataTablesPlugin` is a symfony plugin that includes the [dataTables](http://www.datatables.net/) jQuery plugin into your symfony application.
 
 This plugin is purely a convenience plugin. The dataTables plugin, good as it is, is packaged in a rather unconventional and inconvenient manner. The `cpDateTablesPlugin` provides you with the latest release of dataTables ready for use.
 
