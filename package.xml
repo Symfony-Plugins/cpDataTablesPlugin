@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.6" version="2.0"
+	xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+	<name>cpDataTablesPlugin</name>
+	<channel>plugins.symfony-project.org</channel>
+	<summary>A convenience plugin to include the dataTables jQuery plugin into your symfony application.</summary>
+	<description>The dataTabes plugin, good as it is, is package in a rather unconventional and inconvenient way. It is also rather inconvenient to track the latest version. This plugin does it all for you.</description>
+	<lead>
+		<name>Coopers Peele</name>
+		<user>coopers</user>
+		<email>op@coopers-peele.com</email>
+		<active>yes</active>
+	</lead>
+	<date>2011-05-23</date>
+	<time>01:12:00</time>
+	<version>
+		<release>0.1.0</release>
+		<api>0.1.0</api>
+	</version>
+	<stability>
+		<release>alpha</release>
+		<api>alpha</api>
+	</stability>
+	<license uri="http://www.symfony-project.org/license">MIT license</license>
+	<notes>-</notes>
+	<contents>
+		<dir name="/">
+			<file role="data" name="README" />
+			<file role="data" name="LICENSE" />
+			<dir name="web">
+				<dir name="css">
+					<file role="data" name="demo_page.css" />
+          <file role="data" name="demo_table_jui.css" />
+          <file role="data" name="demo_table.css" />
+				</dir>
+				<dir name="extras">
+				  <dir name="AutoFill">
+ 				    <dir name="css">
+              <file role="data" name="AutoFill.css" />
+				    </dir>
+				    <dir name="images">
+              <file role="data" name="filler.png" />
+				    </dir>
+            <dir name="js">
+              <file role="data" name="AutoFill.js" />
+              <file role="data" name="AutoFill.min.js" />
+              <file role="data" name="AutoFill.min.js.gz" />
+            </dir>
+				  </dir>
+          <dir name="ColReorder">
+            <dir name="css">
+              <file role="data" name="ColReorder.css" />
+            </dir>
+            <dir name="images">
+              <file role="data" name="insert.png" />
+            </dir>
+            <dir name="js">
+              <file role="data" name="ColReorder.js" />
+              <file role="data" name="ColReorder.min.js" />
+              <file role="data" name="ColReorder.min.js.gz" />
+            </dir>
+          </dir>
+          <dir name="ColVis">
+            <dir name="css">
+              <file role="data" name="ColVis.css" />
+              <file role="data" name="ColVisAlt.css" />
+            </dir>
+            <dir name="images">
+              <file role="data" name="button.png" />
+            </dir>
+            <dir name="js">
+              <file role="data" name="ColVis.js" />
+              <file role="data" name="ColVis.min.js" />
+              <file role="data" name="ColVis.min.js.gz" />
+            </dir>
+          </dir>
+          <dir name="FixedColumns">
+            <dir name="js">
+              <file role="data" name="FixedColumns.js" />
+              <file role="data" name="FixedColumns.min.js" />
+              <file role="data" name="FixedColumns.min.js.gz" />
+            </dir>
+          </dir>
+          <dir name="FixedHeader">
+            <dir name="js">
+              <file role="data" name="FixedHeader.js" />
+              <file role="data" name="FixedHeader.min.js" />
+              <file role="data" name="FixedHeader.min.js.gz" />
+            </dir>
+          </dir>
+          <dir name="KeyTable">
+            <dir name="js">
+              <file role="data" name="KeyTable.js" />
+              <file role="data" name="KeyTable.min.js" />
+              <file role="data" name="KeyTable.min.js.gz" />
+            </dir>
+          </dir>
+          <dir name="TableTools">
+            <dir name="as3">
+              <dir name="lib">
+                <file role="data" name="AlivePDF.swc" />
+              </dir>
+              <file role="data" name="ZeroClipboard.as" />
+              <file role="data" name="ZeroClipboardPdf.as" />
+            </dir>
+            <dir name="css">
+              <file role="data" name="TableTools_JUI.css" />
+              <file role="data" name="TableTools.css" />
+            </dir>
+            <dir name="images">
+              <file role="data" name="button.png" />
+            </dir>
+            <dir name="js">
+              <file role="data" name="TableTools.js" />
+              <file role="data" name="TableTools.min.js" />
+              <file role="data" name="TableTools.min.js.gz" />
+              <file role="data" name="ZeroClipboard.js" />
+            </dir>
+            <dir name="swf">
+              <file role="data" name="copy_cvs_xls_pdf.swf" />
+              <file role="data" name="copy_cvs_xls.swf" />
+            </dir>
+          </dir>
+				</dir>
+				<dir name="images">
+          <file role="data" name="back_disabled.jpg" />
+          <file role="data" name="back_enabled.jpg" />
+          <file role="data" name="favicon.ico" />
+          <file role="data" name="forward_disabled.jpg" />
+          <file role="data" name="forward_enabled.jpg" />
+          <file role="data" name="sort_asc_disabled.png" />
+          <file role="data" name="sort_asc.png" />
+          <file role="data" name="sort_both.png" />
+          <file role="data" name="sort_desc_disabled.png" />
+          <file role="data" name="sort_desc.png" />
+				</dir>
+				<dir name="js">
+				  <file role="data" name="jquery.dataTables.ext.js" />
+          <file role="data" name="jquery.dataTables.js" />
+          <file role="data" name="jquery.dataTables.min.js" />
+          <file role="data" name="jquery.dataTables.min.js.gz" />
+				</dir>
+			</dir>
+		</dir>
+	</contents>
+	<dependencies>
+		<required>
+			<php>
+				<min>5.1.0</min>
+			</php>
+			<pearinstaller>
+				<min>1.4.1</min>
+			</pearinstaller>
+			<package>
+				<name>symfony</name>
+				<channel>pear.symfony-project.com</channel>
+				<min>1.2.0</min>
+				<max>1.5.0</max>
+				<exclude>1.5.0</exclude>
+			</package>
+		</required>
+	</dependencies>
+	<phprelease />
+	<changelog>
+		<release>
+			<version>
+				<release>0.1.0</release>
+				<api>0.1.0</api>
+			</version>
+			<stability>
+				<release>alpha</release>
+				<api>alpha</api>
+			</stability>
+			<date>2011-05-23</date>
+			<license uri="http://www.symfony-project.org/license">MIT license</license>
+			<notes>
+        First public release
+      </notes>
+		</release>
+	</changelog>
+</package>
