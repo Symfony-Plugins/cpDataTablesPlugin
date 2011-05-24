@@ -58,7 +58,7 @@ Below are some tips specific to the use of dataTables within a symfony project.
          $(document).ready(function() {
            $('#mytable").dataTable({
              ...
-             bServerSide: true
+             bServerSide: true,
              sAjaxSource: "module/action"
              ...
            });

@@ -13,8 +13,8 @@
 		<email>op@coopers-peele.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2011-05-23</date>
-	<time>01:12:00</time>
+	<date>2011-05-24</date>
+	<time>16:53:00</time>
 	<version>
 		<release>0.1.1</release>
 		<api>0.1.0</api>
@@ -182,7 +182,7 @@
 				<release>alpha</release>
 				<api>alpha</api>
 			</stability>
-			<date>2011-05-23</date>
+			<date>2011-05-24</date>
 			<license uri="http://www.symfony-project.org/license">MIT license</license>
 			<notes>
 			Added language files for internationalization
