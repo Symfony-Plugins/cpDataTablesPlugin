@@ -16,7 +16,7 @@
 	<date>2011-05-23</date>
 	<time>01:12:00</time>
 	<version>
-		<release>0.1.0</release>
+		<release>0.1.1</release>
 		<api>0.1.0</api>
 	</version>
 	<stability>
@@ -147,6 +147,10 @@
           <file role="data" name="jquery.dataTables.min.js" />
           <file role="data" name="jquery.dataTables.min.js.gz" />
 				</dir>
+        <dir name="lang">
+          <file role="data" name="en.txt" />
+          <file role="data" name="fr.txt" />
+        </dir>
 			</dir>
 		</dir>
 	</contents>
@@ -171,7 +175,7 @@
 	<changelog>
 		<release>
 			<version>
-				<release>0.1.0</release>
+				<release>0.1.1</release>
 				<api>0.1.0</api>
 			</version>
 			<stability>
@@ -181,7 +185,7 @@
 			<date>2011-05-23</date>
 			<license uri="http://www.symfony-project.org/license">MIT license</license>
 			<notes>
-        First public release
+			Added language files for internationalization
       </notes>
 		</release>
 	</changelog>

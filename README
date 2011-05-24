@@ -37,4 +37,30 @@ The plugin also includes the dataTables 'extras' as well as some dataTables 'plu
 
 ## Usage
 
-See the dataTables [web site](http://www.datatables.net/).
+See the dataTables [web site](http://www.datatables.net/). Queries about usage of the dataTables jQuery plugin should be directed to the original authors of that plugin. 
+
+Below are some tips specific to the use of dataTables within a symfony project.
+
+### Internationalize the table
+
+         [php]
+         $(document).ready(function() {
+           $('#mytable").dataTable({
+             ...
+             oLanguage: { sUrl: "<?php echo '/cpDataTablesPlugin/lang/' . $sf_user->getCulture() . 'txt'; ?>" }
+             ...
+           });
+         });
+        
+### Popuplate the table via an Ajax request to the server
+
+         [php]
+         $(document).ready(function() {
+           $('#mytable").dataTable({
+             ...
+             bServerSide: true
+             sAjaxSource: "module/action"
+             ...
+           });
+         });
+        
