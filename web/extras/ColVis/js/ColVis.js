@@ -1,18 +1,22 @@
 /*
  * File:        ColVis.js
- * Version:     1.0.4
+ * Version:     1.0.5
  * CVS:         $Id$
  * Description: Controls for column visiblity in DataTables
  * Author:      Allan Jardine (www.sprymedia.co.uk)
  * Created:     Wed Sep 15 18:23:29 BST 2010
  * Modified:    $Date$ by $Author$
  * Language:    Javascript
- * License:     LGPL
+ * License:     GPL v2 or BSD 3 point style
  * Project:     Just a little bit of fun :-)
  * Contact:     www.sprymedia.co.uk/contact
  * 
- * Copyright 2010 Allan Jardine, all rights reserved.
+ * Copyright 2010-2011 Allan Jardine, all rights reserved.
  *
+ * This source file is free software, under either the GPL v2 license or a
+ * BSD style license, available at:
+ *   http://datatables.net/license_gpl2
+ *   http://datatables.net/license_bsd
  */
 
 (function($) {
@@ -131,7 +135,33 @@ ColVis = function( oDTSettings, oInit )
 		 *  @type     String
 		 *  @default  Restore original
 		 */
-		"sRestore": "Restore original"
+		"sRestore": "Restore original",
+		
+		/**
+		 * Overlay animation duration in mS
+		 *  @property iOverlayFade
+		 *  @type     Integer
+		 *  @default  500
+		 */
+		"iOverlayFade": 500,
+		
+		/**
+		 * Label callback for column names. Takes three parameters: 1. the column index, 2. the column
+		 * title detected by DataTables and 3. the TH node for the column
+		 *  @property fnLabel
+		 *  @type     Function
+		 *  @default  null
+		 */
+		"fnLabel": null,
+		
+		/**
+		 * Indicate if ColVis should automatically calculate the size of buttons or not. The default
+		 * is for it to do so. Set to "css" to disable the automatic sizing
+		 *  @property sSize
+		 *  @type     String
+		 *  @default  auto
+		 */
+		"sSize": "auto"
 	};
 	
 	
@@ -331,6 +361,16 @@ ColVis.prototype = {
 		{
 			this.s.fnStateChange = oConfig.fnStateChange;
 		}
+		
+		if ( typeof oConfig.iOverlayFade != 'undefined' )
+		{
+			this.s.iOverlayFade = oConfig.iOverlayFade;
+		}
+		
+		if ( typeof oConfig.fnLabel != 'undefined' )
+		{
+			this.s.fnLabel = oConfig.fnLabel;
+		}
 	},
 	
 	
@@ -446,15 +486,16 @@ ColVis.prototype = {
 		nButton.className = !this.s.dt.bJUI ? "ColVis_Button TableTools_Button" :
 			"ColVis_Button TableTools_Button ui-button ui-state-default";
 		nButton.appendChild( nSpan );
+		var sTitle = this.s.fnLabel===null ? oColumn.sTitle : this.s.fnLabel( i, oColumn.sTitle, oColumn.nTh );
 		$(nSpan).html(
 			'<span class="ColVis_radio"><input type="checkbox"></span>'+
-			'<span class="ColVis_title">'+oColumn.sTitle+'</span>' );
+			'<span class="ColVis_title">'+sTitle+'</span>' );
 		
 		$(nButton).click( function (e) {
-			var showHide = $('input',this).attr('checked')===true ? false : true;
+			var showHide = !$('input', this).is(":checked");
 			if ( e.target.nodeName.toLowerCase() == "input" )
 			{
-				showHide = $('input',this).attr('checked');
+				showHide = $('input', this).is(":checked");
 			}
 			
 			/* Need to consider the case where the initialiser created more than one table - change the
@@ -610,7 +651,7 @@ ColVis.prototype = {
 	 */
 	"_fnCollectionShow": function ()
 	{
-		var that = this;
+		var that = this, i, iLen;
 		var oPos = $(this.dom.button).offset();
 		var nHidden = this.dom.collection;
 		var nBackground = this.dom.background;
@@ -638,6 +679,24 @@ ColVis.prototype = {
 		document.body.appendChild( nHidden );
 		document.body.appendChild( this.dom.catcher );
 		
+		/* Resize the buttons */
+		if ( this.s.sSize == "auto" )
+		{
+			var aiSizes = [];
+			this.dom.collection.style.width = "auto";
+			for ( i=0, iLen=this.dom.buttons.length ; i<iLen ; i++ )
+			{
+				this.dom.buttons[i].style.width = "auto";
+				aiSizes.push( $(this.dom.buttons[i]).outerWidth() );
+			}
+			iMax = Math.max.apply(window, aiSizes);
+			for ( i=0, iLen=this.dom.buttons.length ; i<iLen ; i++ )
+			{
+				this.dom.buttons[i].style.width = iMax+"px";
+			}
+			this.dom.collection.style.width = iMax+"px";
+		}
+		
 		/* Visual corrections to try and keep the collection visible */
 		nHidden.style.left = this.s.sAlign=="left" ?
 			iDivX+"px" : (iDivX-$(nHidden).outerWidth()+$(this.dom.button).outerWidth())+"px";
@@ -650,18 +709,13 @@ ColVis.prototype = {
 			nHidden.style.left = (iDocWidth-iDivWidth)+"px";
 		}
 		
-		if ( iDivY + iDivHeight > iDocHeight )
-		{
-			nHidden.style.top = (iDivY-iDivHeight-$(this.dom.button).outerHeight())+"px";
-		}
-		
 		
 		/* This results in a very small delay for the end user but it allows the animation to be
 		 * much smoother. If you don't want the animation, then the setTimeout can be removed
 		 */
 		setTimeout( function () {
-			$(nHidden).animate({"opacity": 1}, 500);
-			$(nBackground).animate({"opacity": 0.1}, 500, 'linear', function () {
+			$(nHidden).animate({"opacity": 1}, that.s.iOverlayFade);
+			$(nBackground).animate({"opacity": 0.1}, that.s.iOverlayFade, 'linear', function () {
 				/* In IE6 if you set the checked attribute of a hidden checkbox, then this is not visually
 				 * reflected. As such, we need to do it here, once it is visible. Unbelievable.
 				 */
@@ -690,11 +744,11 @@ ColVis.prototype = {
 		{
 			this.s.hidden = true;
 			
-			$(this.dom.collection).animate({"opacity": 0}, 500, function (e) {
+			$(this.dom.collection).animate({"opacity": 0}, that.s.iOverlayFade, function (e) {
 				this.style.display = "none";
 			} );
 			
-			$(this.dom.background).animate({"opacity": 0}, 500, function (e) {
+			$(this.dom.background).animate({"opacity": 0}, that.s.iOverlayFade, function (e) {
 				document.body.removeChild( that.dom.background );
 				document.body.removeChild( that.dom.catcher );
 			} );
@@ -774,7 +828,7 @@ ColVis.prototype.CLASS = "ColVis";
  *  @type      String
  *  @default   1.0.4.dev
  */
-ColVis.VERSION = "1.0.4";
+ColVis.VERSION = "1.0.5";
 ColVis.prototype.VERSION = ColVis.VERSION;
 
 

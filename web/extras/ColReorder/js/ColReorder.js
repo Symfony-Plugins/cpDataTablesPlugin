@@ -1,17 +1,22 @@
 /*
  * File:        ColReorder.js
- * Version:     1.0.1
+ * Version:     1.0.3
  * CVS:         $Id$
  * Description: Controls for column visiblity in DataTables
  * Author:      Allan Jardine (www.sprymedia.co.uk)
  * Created:     Wed Sep 15 18:23:29 BST 2010
  * Modified:    $Date$ by $Author$
  * Language:    Javascript
- * License:     LGPL
+ * License:     GPL v2 or BSD 3 point style
  * Project:     DataTables
  * Contact:     www.sprymedia.co.uk/contact
  * 
- * Copyright 2010 Allan Jardine, all rights reserved.
+ * Copyright 2010-2011 Allan Jardine, all rights reserved.
+ *
+ * This source file is free software, under either the GPL v2 license or a
+ * BSD style license, available at:
+ *   http://datatables.net/license_gpl2
+ *   http://datatables.net/license_bsd
  *
  */
 
@@ -104,7 +109,7 @@ function fnDomSwitch( nParent, iFrom, iTo )
  */
 $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 {
-	var i, iLen, j, jLen, iCols=oSettings.aoColumns.length, nTrs;
+	var i, iLen, j, jLen, iCols=oSettings.aoColumns.length, nTrs, oCol;
 	
 	/* Sanity check in the input */
 	if ( iFrom == iTo )
@@ -159,6 +164,17 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 	for ( i=0, iLen=iCols ; i<iLen ; i++ )
 	{
 		oSettings.aoColumns[i].iDataSort = aiInvertMapping[ oSettings.aoColumns[i].iDataSort ];
+	}
+	
+	/* Update the Get and Set functions for each column */
+	for ( i=0, iLen=iCols ; i<iLen ; i++ )
+	{
+		oCol = oSettings.aoColumns[i];
+		if ( typeof oCol.mDataProp == 'number' ) {
+			oCol.mDataProp = aiInvertMapping[ oCol.mDataProp ];
+			oCol.fnGetData = oSettings.oApi._fnGetObjectDataFn( oCol.mDataProp );
+			oCol.fnSetData = oSettings.oApi._fnSetObjectDataFn( oCol.mDataProp );
+		}
 	}
 	
 	
@@ -218,8 +234,24 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 	/* Array array - internal data anodes cache */
 	for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
 	{
-		fnArraySwitch( oSettings.aoData[i]._aData, iFrom, iTo );
+		if ( $.isArray( oSettings.aoData[i]._aData ) ) {
+		  fnArraySwitch( oSettings.aoData[i]._aData, iFrom, iTo );
+		}
 		fnArraySwitch( oSettings.aoData[i]._anHidden, iFrom, iTo );
+	}
+	
+	/* Reposition the header elements in the header layout array */
+	for ( i=0, iLen=oSettings.aoHeader.length ; i<iLen ; i++ )
+	{
+		fnArraySwitch( oSettings.aoHeader[i], iFrom, iTo );
+	}
+	
+	if ( oSettings.aoFooter !== null )
+	{
+		for ( i=0, iLen=oSettings.aoFooter.length ; i<iLen ; i++ )
+		{
+			fnArraySwitch( oSettings.aoFooter[i], iFrom, iTo );
+		}
 	}
 	
 	
@@ -884,9 +916,9 @@ ColReorder.prototype.CLASS = "ColReorder";
  * ColReorder version
  *  @constant  VERSION
  *  @type      String
- *  @default   1.0.1.dev
+ *  @default   As code
  */
-ColReorder.VERSION = "1.0.1";
+ColReorder.VERSION = "1.0.3";
 ColReorder.prototype.VERSION = ColReorder.VERSION;
 
 
@@ -902,7 +934,7 @@ ColReorder.prototype.VERSION = ColReorder.VERSION;
  */
 if ( typeof $.fn.dataTable == "function" &&
      typeof $.fn.dataTableExt.fnVersionCheck == "function" &&
-     $.fn.dataTableExt.fnVersionCheck('1.7.4') )
+     $.fn.dataTableExt.fnVersionCheck('1.8.0') )
 {
 	$.fn.dataTableExt.aoFeatures.push( {
 		"fnInit": function( oDTSettings ) {
@@ -923,7 +955,7 @@ if ( typeof $.fn.dataTable == "function" &&
 }
 else
 {
-	alert( "Warning: ColReorder requires DataTables 1.7.4 or greater - www.datatables.net/download");
+	alert( "Warning: ColReorder requires DataTables 1.8.0 or greater - www.datatables.net/download");
 }
 
 })(jQuery, window, document);
