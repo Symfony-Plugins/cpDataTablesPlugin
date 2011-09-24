@@ -1,6 +1,6 @@
 /*
  * File:        ColReorder.js
- * Version:     1.0.3
+ * Version:     1.0.4
  * CVS:         $Id$
  * Description: Controls for column visiblity in DataTables
  * Author:      Allan Jardine (www.sprymedia.co.uk)
@@ -217,7 +217,10 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 		/* Body */
 		for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
 		{
-			fnDomSwitch( oSettings.aoData[i].nTr, iVisibleIndex, iInsertBeforeIndex );
+			if ( oSettings.aoData[i].nTr !== null )
+			{
+				fnDomSwitch( oSettings.aoData[i].nTr, iVisibleIndex, iInsertBeforeIndex );
+			}
 		}
 	}
 	
@@ -338,6 +341,14 @@ ColReorder = function( oTable, oOpts )
 		"fixed": 0,
 		
 		/**
+		 * Callback function for once the reorder has been done
+		 *  @property dropcallback
+		 *  @type     function
+		 *  @default  null
+		 */
+		"dropCallback": null,
+		
+		/**
 		 * @namespace Information used for the mouse drag
 		 */
 		"mouse": {
@@ -432,6 +443,12 @@ ColReorder.prototype = {
 		if ( typeof this.s.init.iFixedColumns != 'undefined' )
 		{
 			this.s.fixed = this.s.init.iFixedColumns;
+		}
+		
+		/* Drop callback initialisation option */
+		if ( typeof this.s.init.fnReorderCallback != 'undefined' )
+		{
+			this.s.dropCallback = this.s.init.fnReorderCallback;
 		}
 		
 		/* Add event handlers for the drag and drop, and also mark the original column order */
@@ -787,6 +804,11 @@ ColReorder.prototype = {
 				this.s.dt.oInstance.fnAdjustColumnSizing();
 			}
 			
+			if ( this.s.dropCallback !== null )
+			{
+				this.s.dropCallback.call( this );
+			}
+			
 			/* Save the state */
 			this.s.dt.oInstance.oApi._fnSaveState( this.s.dt );
 		}
@@ -806,6 +828,10 @@ ColReorder.prototype = {
 		
 		this.dom.drag = $(this.s.dt.nTHead.parentNode).clone(true)[0];
 		this.dom.drag.className += " DTCR_clonedTable";
+		while ( this.dom.drag.getElementsByTagName('caption').length > 0 )
+		{
+			this.dom.drag.removeChild( this.dom.drag.getElementsByTagName('caption')[0] );
+		}
 		while ( this.dom.drag.getElementsByTagName('tbody').length > 0 )
 		{
 			this.dom.drag.removeChild( this.dom.drag.getElementsByTagName('tbody')[0] );
@@ -918,7 +944,7 @@ ColReorder.prototype.CLASS = "ColReorder";
  *  @type      String
  *  @default   As code
  */
-ColReorder.VERSION = "1.0.3";
+ColReorder.VERSION = "1.0.4";
 ColReorder.prototype.VERSION = ColReorder.VERSION;
 
 

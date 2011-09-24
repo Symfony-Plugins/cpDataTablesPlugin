@@ -1,6 +1,6 @@
 /*
  * File:        ColVis.js
- * Version:     1.0.5
+ * Version:     1.0.6
  * CVS:         $Id$
  * Description: Controls for column visiblity in DataTables
  * Author:      Allan Jardine (www.sprymedia.co.uk)
@@ -686,13 +686,19 @@ ColVis.prototype = {
 			this.dom.collection.style.width = "auto";
 			for ( i=0, iLen=this.dom.buttons.length ; i<iLen ; i++ )
 			{
-				this.dom.buttons[i].style.width = "auto";
-				aiSizes.push( $(this.dom.buttons[i]).outerWidth() );
+				if ( this.dom.buttons[i] !== null )
+				{
+					this.dom.buttons[i].style.width = "auto";
+					aiSizes.push( $(this.dom.buttons[i]).outerWidth() );
+				}
 			}
 			iMax = Math.max.apply(window, aiSizes);
 			for ( i=0, iLen=this.dom.buttons.length ; i<iLen ; i++ )
 			{
-				this.dom.buttons[i].style.width = iMax+"px";
+				if ( this.dom.buttons[i] !== null )
+				{
+					this.dom.buttons[i].style.width = iMax+"px";
+				}
 			}
 			this.dom.collection.style.width = iMax+"px";
 		}
@@ -826,9 +832,9 @@ ColVis.prototype.CLASS = "ColVis";
  * ColVis version
  *  @constant  VERSION
  *  @type      String
- *  @default   1.0.4.dev
+ *  @default   See code
  */
-ColVis.VERSION = "1.0.5";
+ColVis.VERSION = "1.0.6";
 ColVis.prototype.VERSION = ColVis.VERSION;
 
 
