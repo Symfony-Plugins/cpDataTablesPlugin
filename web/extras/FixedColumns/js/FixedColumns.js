@@ -2,7 +2,7 @@
  * @summary     FixedColumns
  * @description Freeze columns in place on a scrolling DataTable
  * @file        FixedColumns.js
- * @version     2.0.1
+ * @version     2.0.2
  * @author      Allan Jardine (www.sprymedia.co.uk)
  * @license     GPL v2 or BSD 3 point style
  * @contact     www.sprymedia.co.uk/contact
@@ -289,7 +289,7 @@ FixedColumns.prototype = {
 	 */
 	"fnRedrawLayout": function ()
 	{
-		this.__fnGridLayout();
+		this._fnGridLayout();
 	},
 	
 	
@@ -938,7 +938,7 @@ FixedColumns.prototype = {
 	 */
 	"_fnEqualiseHeights": function ( nodeName, original, clone )
 	{
-		if ( this.s.sHeightMatch == 'none' )
+		if ( this.s.sHeightMatch == 'none' && nodeName !== 'thead' && nodeName !== 'tfoot' )
 		{
 			return;
 		}
@@ -975,7 +975,7 @@ FixedColumns.prototype = {
 			}
 			
 			/* Can we use some kind of object detection here?! This is very nasty - damn browsers */
-			if ( $.browser.msie )
+			if ( $.browser.msie && $.browser.version < 8 )
 			{
 				$(anClone[i]).children().height( iHeight-iBoxHack );
 				$(anOriginal[i]).children().height( iHeight-iBoxHack );	
@@ -1163,7 +1163,7 @@ FixedColumns.prototype.CLASS = "FixedColumns";
  *  @default   See code
  *  @static
  */
-FixedColumns.VERSION = "2.0.1";
+FixedColumns.VERSION = "2.0.2";
 
 
 
