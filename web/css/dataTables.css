@@ -79,6 +79,8 @@ table.list td.actions a { margin: 0 2px; }
 .dataTables_length {
 	width: 40%;
 	float: left;
+  clear: left;
+  margin: 0.25em 0;
 }
 
 .dataTables_filter {
@@ -88,8 +90,9 @@ table.list td.actions a { margin: 0 2px; }
 }
 
 .dataTables_info {
-	width: 60%;
+	width: 40%;
 	float: left;
+	margin: 0.25em 0;
 }
 
 .dataTables_paginate {
@@ -97,6 +100,7 @@ table.list td.actions a { margin: 0 2px; }
 	* width: 50px;
 	float: right;
 	text-align: right;
+  margin: 0.5em 0;
 }
 
 /* Pagination nested */
@@ -104,7 +108,7 @@ table.list td.actions a { margin: 0 2px; }
 	height: 19px;
 	width: 19px;
 	margin-left: 3px;
-	float: left;
+	float: left; 
 }
 
 .paginate_disabled_previous {
