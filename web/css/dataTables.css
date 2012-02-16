@@ -1,6 +1,8 @@
 table.dataTables {
 	table-layout: fixed;
 	border-collapse:collapse;
+  clear: both;
+  width: 100%!important;
 }
 
 table.dataTables caption { 
