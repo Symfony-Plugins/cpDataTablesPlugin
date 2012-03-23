@@ -51,7 +51,7 @@ table.dataTables td.amount {
   padding-right: 5px;
 }
 
-table.list td.actions a { margin: 0 2px; }
+table.list td.actions a { margin: 0; }
 
 
 .dataTables_wrapper {
